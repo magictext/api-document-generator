@@ -54,13 +54,13 @@ public class RestDocumentGenerator {
     }
 
     public String requestPart() {
-        StringBuffer stringBuffer = new StringBuffer("### 请求参数<业务参数>\n \n");
+        StringBuffer stringBuffer = new StringBuffer("### 请求参数\n \n");
         List<FieldDefinition> fieldDefinitions = this.definition.getRequest();
         if (fieldDefinitions == null || fieldDefinitions.isEmpty()) {
             stringBuffer.append("无参数\n");
             return stringBuffer.toString();
         }
-        stringBuffer.append("|参数名|必选|类型|说明|\n");
+        stringBuffer.append("|参数名|类型|说明|必选|\n");
         stringBuffer.append("|:----    |:---|:----- |-----   |\n");
 
         stringBuffer.append(this.fieldDefinitionTableBody(fieldDefinitions));
