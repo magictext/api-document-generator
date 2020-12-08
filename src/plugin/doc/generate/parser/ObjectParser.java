@@ -41,7 +41,7 @@ public class ObjectParser extends Parser {
         List<PsiField> psiFieldList = new ArrayList<>();
         if (TypeTranslator.TYPE_LIST.equals(type)) {
             PsiType genericsType = MyPsiSupport.getGenericsType(psiType, 0);
-            if (genericsType != null) {
+            if (genericsType != null && !genericsType.toString().contains("?")) {
                 PsiClass genericsClass = MyPsiSupport.getPsiClass(genericsType);
                 psiFieldList = this.getAvailablePsiField(genericsClass, genericsClass.getAllFields());
             }
