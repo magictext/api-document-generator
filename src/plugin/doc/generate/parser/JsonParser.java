@@ -37,7 +37,8 @@ public class JsonParser extends Parser {
         List<PsiField> psiFieldList = new ArrayList<>();
         if (TypeTranslator.TYPE_LIST.equals(type)) {
             PsiType genericsType = MyPsiSupport.getGenericsType(psiType, 0);
-            if (genericsType != null) {
+            if (genericsType != null && !genericsType.toString().contains("?")) {
+                String s = genericsType.toString();
                 PsiClass genericsClass = MyPsiSupport.getPsiClass(genericsType);
                 psiFieldList = this.getAvailablePsiField(genericsClass, genericsClass.getAllFields());
             }
