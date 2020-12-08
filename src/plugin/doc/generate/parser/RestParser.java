@@ -202,7 +202,7 @@ public class RestParser extends Parser {
      * @return
      */
     private String getHttpMethod() {
-        String httpMethod = "Get";
+        String httpMethod = "undefined";
         PsiAnnotation reqMapAn = MyPsiSupport.getPsiAnnotation(psiMethod, SpringContact.ANNOTATION_REQUESTMAPPING);
         if (reqMapAn != null) {
             String methodVal = MyPsiSupport.getPsiAnnotationValueByAttr(reqMapAn, "method");
@@ -220,6 +220,17 @@ public class RestParser extends Parser {
         PsiAnnotation postMapAn = MyPsiSupport.getPsiAnnotation(psiMethod, SpringContact.ANNOTATION_POSTMAPPING);
         if (postMapAn != null) {
             httpMethod = "POST";
+        }
+        PsiAnnotation deleteMapAn = MyPsiSupport.getPsiAnnotation(psiMethod, SpringContact.ANNOTATION_DELETEMAPPING);
+        if (deleteMapAn != null) {
+            httpMethod = "DELETE";
+        }PsiAnnotation putMapAn = MyPsiSupport.getPsiAnnotation(psiMethod, SpringContact.ANNOTATION_PUTMAPPING);
+        if (putMapAn != null) {
+            httpMethod = "PUT";
+        }
+        PsiAnnotation getMapAn = MyPsiSupport.getPsiAnnotation(psiMethod, SpringContact.ANNOTATION_GETMAPPING);
+        if (getMapAn != null) {
+            httpMethod = "GET";
         }
         return httpMethod;
     }
@@ -290,6 +301,14 @@ public class RestParser extends Parser {
             methodUriPart = getPartOfUri(postMapAn);
         }
 
+        PsiAnnotation putMapAn = MyPsiSupport.getPsiAnnotation(psiMethod, SpringContact.ANNOTATION_PUTMAPPING);
+        if (putMapAn != null) {
+            methodUriPart = getPartOfUri(putMapAn);
+
+        }PsiAnnotation deleteMapAn = MyPsiSupport.getPsiAnnotation(psiMethod, SpringContact.ANNOTATION_DELETEMAPPING);
+        if (deleteMapAn != null) {
+            methodUriPart = getPartOfUri(deleteMapAn);
+        }
 
         String classUriPart = "";
         PsiAnnotation clzReqMapAn = MyPsiSupport.getPsiAnnotation(psiMethod.getContainingClass(), SpringContact.ANNOTATION_REQUESTMAPPING);

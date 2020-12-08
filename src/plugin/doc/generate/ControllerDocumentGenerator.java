@@ -107,9 +107,13 @@ public class ControllerDocumentGenerator extends AnAction {
         List<PsiMethod> postMethods = MyPsiSupport.getPsiMethods(classes, SpringContact.ANNOTATION_POSTMAPPING);
         List<PsiMethod> requestMethods = MyPsiSupport.getPsiMethods(classes, SpringContact.ANNOTATION_REQUESTMAPPING);
         List<PsiMethod> getMethods = MyPsiSupport.getPsiMethods(classes, SpringContact.ANNOTATION_GETMAPPING);
+        List<PsiMethod> putMethods = MyPsiSupport.getPsiMethods(classes, SpringContact.ANNOTATION_PUTMAPPING);
+        List<PsiMethod> deleteMethods = MyPsiSupport.getPsiMethods(classes, SpringContact.ANNOTATION_DELETEMAPPING);
         Set<PsiMethod> targetMethod = new HashSet<>();
         targetMethod.addAll(postMethods);
         targetMethod.addAll(getMethods);
+        targetMethod.addAll(putMethods);
+        targetMethod.addAll(deleteMethods);
         targetMethod.addAll(requestMethods);
         return targetMethod;
     }
