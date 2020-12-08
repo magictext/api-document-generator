@@ -42,12 +42,14 @@ public class MapParser {
                 psiFieldList = this.getAvailablePsiField(genericsClass, genericsClass.getAllFields());
             }
         } else {
-            for (PsiField psiField : psiClass.getAllFields()) {
-                if (MyPsiSupport.findPsiMethod(psiClass, Convertor.getFieldGetterName(psiField.getName())) != null) {
-                    psiFieldList.add(psiField);
-                }
-                if (MyPsiSupport.findPsiMethod(psiClass, Convertor.getFieldBoolGetterName(psiField.getName())) != null) {
-                    psiFieldList.add(psiField);
+            if (psiClass!=null) {
+                for (PsiField psiField : psiClass.getAllFields()) {
+                    if (MyPsiSupport.findPsiMethod(psiClass, Convertor.getFieldGetterName(psiField.getName())) != null) {
+                        psiFieldList.add(psiField);
+                    }
+                    if (MyPsiSupport.findPsiMethod(psiClass, Convertor.getFieldBoolGetterName(psiField.getName())) != null) {
+                        psiFieldList.add(psiField);
+                    }
                 }
             }
         }
