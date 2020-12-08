@@ -62,8 +62,7 @@ public class RestDocumentGenerator {
         }
         stringBuffer.append("|参数名|类型|说明|必选|\n");
         stringBuffer.append("|:----    |:---|:----- |-----   |\n");
-
-        stringBuffer.append(this.fieldDefinitionTableBody(fieldDefinitions));
+        stringBuffer.append(this.requestDefinitionTableBody(fieldDefinitions));
         return stringBuffer.toString();
     }
 
@@ -72,11 +71,11 @@ public class RestDocumentGenerator {
         stringBuffer.append("|参数名|类型|说明|\n");
         stringBuffer.append("|:----   |:----- |-----   |\n");
         List<FieldDefinition> fieldDefinitions = this.definition.getResponse();
-        stringBuffer.append(this.fieldDefinitionTableBody(fieldDefinitions));
+        stringBuffer.append(this.responseDefinitionTableBody(fieldDefinitions));
         return stringBuffer.toString();
     }
 
-    public String fieldDefinitionTableBody(List<FieldDefinition> fieldDefinitions) {
+    public String responseDefinitionTableBody(List<FieldDefinition> fieldDefinitions) {
         StringBuffer stringBuffer = new StringBuffer();
         if (fieldDefinitions == null || fieldDefinitions.isEmpty()) {
             return stringBuffer.toString();
@@ -84,12 +83,30 @@ public class RestDocumentGenerator {
         for (FieldDefinition definition : fieldDefinitions) {
             String layerChat = this.getLayerChat(definition.getLayer());
             stringBuffer.append("|" + layerChat + definition.getName());
-//            stringBuffer.append("|" + (definition.isRequire() ? "是" : "否"));
             stringBuffer.append("|" + definition.getType());
             stringBuffer.append("|" + definition.getDesc());
             stringBuffer.append("|\n");
             if (definition.getSubFieldDefinitions() != null && !definition.getSubFieldDefinitions().isEmpty()) {
-                stringBuffer.append(this.fieldDefinitionTableBody(definition.getSubFieldDefinitions()));
+                stringBuffer.append(this.responseDefinitionTableBody(definition.getSubFieldDefinitions()));
+            }
+        }
+        return stringBuffer.toString();
+    }
+
+    public String requestDefinitionTableBody(List<FieldDefinition> fieldDefinitions) {
+        StringBuffer stringBuffer = new StringBuffer();
+        if (fieldDefinitions == null || fieldDefinitions.isEmpty()) {
+            return stringBuffer.toString();
+        }
+        for (FieldDefinition definition : fieldDefinitions) {
+            String layerChat = this.getLayerChat(definition.getLayer());
+            stringBuffer.append("|" + layerChat + definition.getName());
+            stringBuffer.append("|" + definition.getType());
+            stringBuffer.append("|" + definition.getDesc());
+            stringBuffer.append("|" + (definition.isRequire() ? "是" : ""));
+            stringBuffer.append("|\n");
+            if (definition.getSubFieldDefinitions() != null && !definition.getSubFieldDefinitions().isEmpty()) {
+                stringBuffer.append(this.responseDefinitionTableBody(definition.getSubFieldDefinitions()));
             }
         }
         return stringBuffer.toString();

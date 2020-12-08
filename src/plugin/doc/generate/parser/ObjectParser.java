@@ -106,15 +106,16 @@ public class ObjectParser extends Parser {
         FieldDefinition definition = new FieldDefinition();
         String dec = JavaDocUtils.getText(psiField.getDocComment());
         String name = psiField.getName();
-
-        boolean require = MyPsiSupport.getPsiAnnotation(psiField, MyContact.VALIDATOR_NOTEMPTYCHECK) != null;
+        /*boolean require = MyPsiSupport.getPsiAnnotation(psiField, MyContact.VALIDATOR_NOTEMPTYCHECK) != null;
         if (!require) {
             require = MyPsiSupport.getPsiAnnotation(psiField, CommonContact.CONSTRAINTS_NOTNULL) != null;
-        }
+        }*/
+        definition.setRequire(MyPsiSupport.getPsiAnnotation(psiField, CommonContact.CONSTRAINTS_NOTNULL) != null
+                || MyPsiSupport.getPsiAnnotation(psiField, CommonContact.CONSTRAINTS_NOTBLANK) != null
+                || MyPsiSupport.getPsiAnnotation(psiField, CommonContact.CONSTRAINTS_NOTEMPTY) != null);
         definition.setLayer(layer);
         definition.setName(name);
         definition.setDesc(dec);
-        definition.setRequire(require);
         PsiType fieldType = getRealType(this.psiType, psiField);
         PsiClass fieldClass = MyPsiSupport.getPsiClass(fieldType);
         if (fieldClass == null) {
