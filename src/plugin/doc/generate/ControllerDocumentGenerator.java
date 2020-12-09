@@ -56,13 +56,13 @@ public class ControllerDocumentGenerator extends AnAction {
      */
     protected void openDialog(String result) {
         Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
-        int w = (int) (screensize.width * 0.3);
-        int h = (int) (screensize.height * 0.3);
+        double width = screensize.width;
+        double height = screensize.height;
 
         DocumentExportDialog dialog = new DocumentExportDialog(result);
-        dialog.setSize(w, h);
         dialog.pack();
-        dialog.setLocation((int) (screensize.width * 0.5) - (int) (w * 0.5), (int) (screensize.height * 0.5) - (int) (h * 0.5));
+        dialog.setSize((int)(width*0.25),(int)(height*0.5));
+        dialog.setLocation((int)(width*0.33),(int)(height*0.2));
         dialog.setVisible(true);
 
     }
