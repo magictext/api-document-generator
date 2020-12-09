@@ -16,16 +16,16 @@ import java.util.Map;
 public class MapParser {
 
     private PsiClass psiClass;
-    private  Integer layer;
-    private  PsiType psiType;
+    private Integer layer;
+    private PsiType psiType;
 
-    public MapParser(PsiType psiType,Integer layer) {
+    public MapParser(PsiType psiType, Integer layer) {
         this.psiType = psiType;
         this.psiClass = MyPsiSupport.getPsiClass(psiType);
         this.layer = layer;
     }
 
-    public Map generateMap(){
+    public Map generateMap() {
         if (layer >= 3) return null;
         HashMap<String, Object> obj = new HashMap<>();
         String type = null;
@@ -42,7 +42,7 @@ public class MapParser {
                 psiFieldList = this.getAvailablePsiField(genericsClass, genericsClass.getAllFields());
             }
         } else {
-            if (psiClass!=null) {
+            if (psiClass != null) {
                 for (PsiField psiField : psiClass.getAllFields()) {
                     if (MyPsiSupport.findPsiMethod(psiClass, Convertor.getFieldGetterName(psiField.getName())) != null) {
                         psiFieldList.add(psiField);
@@ -66,9 +66,9 @@ public class MapParser {
                 flag = TypeTranslator.docTypeTranslate(fieldClass.getQualifiedName());
             }
             if ("Object".equals(flag)) {
-                MapParser mapParser = new MapParser(fieldType, layer+1);
+                MapParser mapParser = new MapParser(fieldType, layer + 1);
                 Map map = mapParser.generateMap();
-                obj.put(psiField.getName(),map);
+                obj.put(psiField.getName(), map);
             } else if ("List".equals(flag)) {
 
             } else {
@@ -98,7 +98,7 @@ public class MapParser {
         return psiFieldList;
     }
 
-    public PsiType getRealType(PsiType psiType, PsiField psiField){
+    public PsiType getRealType(PsiType psiType, PsiField psiField) {
         PsiType fieldType = MyPsiSupport.getGenericsType(psiType, psiField);
         if (fieldType == null) {
             fieldType = psiField.getType();
