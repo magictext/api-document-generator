@@ -37,8 +37,11 @@ public class RestDocumentGenerator {
     }
 
     private String requestExample() {
-        return "```json \n"+definition.getRequestExample()+"\n ```\n";
-
+        String requestExample = definition.getRequestExample();
+        if (requestExample == null) {
+            return "";
+        }
+        return "```json \n" + requestExample + "\n ```\n";
     }
 
     public String interfaceNamePart() {
