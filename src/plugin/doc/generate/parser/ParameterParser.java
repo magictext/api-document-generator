@@ -43,26 +43,36 @@ public class ParameterParser extends Parser {
         return null;
     }
 
-    public void doParse(){
+    public void doParse() {
         if (psiParameters == null || psiParameters.length == 0) {
             return;
         }
-        for (PsiParameter psiParameter : this.psiParameters){
+        for (PsiParameter psiParameter : this.psiParameters) {
             FieldDefinition definition = this.parseSingleParameterDefinition(psiParameter);
-            if(definition!=null){
+            if (definition != null) {
                 this.fieldDefinitions.add(definition);
             }
         }
     }
 
 
-    public FieldDefinition parseSingleParameterDefinition(PsiParameter psiParameter){
-        if(psiParameter == null){
+    public FieldDefinition parseSingleParameterDefinition(PsiParameter psiParameter) {
+        if (psiParameter == null) {
             return null;
         }
-        String paramName = psiParameter.getName();
-        String desc = JavaDocUtils.getParamsDesc(psiMethod.getDocComment(),paramName);
         FieldDefinition definition = new FieldDefinition();
+
+        String paramName;
+        PsiAnnotation requestParam = MyPsiSupport.getPsiAnnotation(psiParameter, "org.springframework.web.bind.annotation.RequestParam");
+        if (requestParam != null) {
+            String name = MyPsiSupport.getPsiAnnotationValueByAttr(requestParam, "name");
+            paramName = name == null ? psiParameter.getName() : name;
+        } else {
+            paramName = psiParameter.getName();
+        }
+
+        String desc = JavaDocUtils.getParamsDesc(psiMethod.getDocComment(), paramName);
+
         definition.setName(paramName);
         definition.setLayer(0);
         definition.setDesc(desc);
