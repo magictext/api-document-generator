@@ -54,13 +54,15 @@ public class RestParser extends Parser {
         this.definition = definition;
         return desc;
     }
+
     /**
      * 获得请求示例
+     *
      * @return
      */
     private String getRequestParamsExample() {
         PsiParameter[] psiParameter = this.psiMethod.getParameterList().getParameters();
-        if (psiParameter != null && psiParameter.length != 0) {
+        if (psiParameter.length != 0) {
             ParamsJsonParser paramsJsonParser = new ParamsJsonParser(psiParameter);
             return paramsJsonParser.parseDefinition();
         }
@@ -69,6 +71,7 @@ public class RestParser extends Parser {
 
     /**
      * 获得返回示例
+     *
      * @return
      */
     private String getResponseBodyExample() {
@@ -82,6 +85,7 @@ public class RestParser extends Parser {
 
     /**
      * 获得请求示例
+     *
      * @return
      */
     private String getRequestBodyExample() {
@@ -103,8 +107,7 @@ public class RestParser extends Parser {
     private List<FieldDefinition> getResponseDefinitions() {
         ObjectParser objectParser = new ObjectParser(psiMethod.getReturnType(), psiMethod.getProject(), 0);
         objectParser.parseDefinition();
-        List<FieldDefinition> responseDefinitions = objectParser.getFieldDefinitions();
-        return responseDefinitions;
+        return objectParser.getFieldDefinitions();
     }
 
     /**
@@ -117,8 +120,7 @@ public class RestParser extends Parser {
         if (psiParameter != null) {
             ObjectParser objectParser = new ObjectParser(psiParameter.getType(), psiMethod.getProject(), 0);
             objectParser.parseDefinition();
-            List<FieldDefinition> responseDefinitions = objectParser.getFieldDefinitions();
-            return responseDefinitions;
+            return objectParser.getFieldDefinitions();
         }
         return null;
     }
@@ -130,11 +132,10 @@ public class RestParser extends Parser {
      */
     private List<FieldDefinition> getRequestParamsDefinitions() {
         PsiParameter[] psiParameter = this.psiMethod.getParameterList().getParameters();
-        if (psiParameter != null) {
+        if (psiParameter.length > 0) {
             ParameterParser parameterParser = new ParameterParser(this.psiMethod);
             parameterParser.parseDefinition();
-            List<FieldDefinition> responseDefinitions = parameterParser.getFieldDefinitions();
-            return responseDefinitions;
+            return parameterParser.getFieldDefinitions();
         }
         return null;
     }
@@ -147,7 +148,7 @@ public class RestParser extends Parser {
      */
     public BodyType getRequestBodyType() {
         PsiParameter[] parameters = this.psiMethod.getParameterList().getParameters();
-        if (parameters != null && parameters.length > 0) {
+        if (parameters.length > 0) {
             for (PsiParameter psiParameter : parameters) {
                 PsiAnnotation annotation = MyPsiSupport.getPsiAnnotation(psiParameter, SpringContact.ANNOTATION_REQUESTBODY);
                 if (annotation != null) {
@@ -166,7 +167,7 @@ public class RestParser extends Parser {
      */
     public PsiParameter getRequestBodyParam() {
         PsiParameter[] parameters = this.psiMethod.getParameterList().getParameters();
-        if (parameters != null && parameters.length > 0) {
+        if (parameters.length > 0) {
             for (PsiParameter psiParameter : parameters) {
                 PsiAnnotation annotation = MyPsiSupport.getPsiAnnotation(psiParameter, SpringContact.ANNOTATION_REQUESTBODY);
                 if (annotation != null) {
@@ -224,7 +225,8 @@ public class RestParser extends Parser {
         PsiAnnotation deleteMapAn = MyPsiSupport.getPsiAnnotation(psiMethod, SpringContact.ANNOTATION_DELETEMAPPING);
         if (deleteMapAn != null) {
             httpMethod = "DELETE";
-        }PsiAnnotation putMapAn = MyPsiSupport.getPsiAnnotation(psiMethod, SpringContact.ANNOTATION_PUTMAPPING);
+        }
+        PsiAnnotation putMapAn = MyPsiSupport.getPsiAnnotation(psiMethod, SpringContact.ANNOTATION_PUTMAPPING);
         if (putMapAn != null) {
             httpMethod = "PUT";
         }
@@ -246,8 +248,7 @@ public class RestParser extends Parser {
         String path = MyPsiSupport.getPsiAnnotationValueByAttr(annotation, "path");
         String val = MyPsiSupport.getPsiAnnotationValueByAttr(annotation, "value");
         String resultPath = path == null || path.length() <= 0 ? val : path;
-        String partOfUri = resultPath != null && resultPath.length() > 0 ? resultPath : "";
-        return partOfUri;
+        return resultPath != null && resultPath.length() > 0 ? resultPath : "";
     }
 
     /**
@@ -260,10 +261,10 @@ public class RestParser extends Parser {
         Module module = ModuleUtil.findModuleForPsiElement(this.psiMethod);
         String contextPart = "";
         PsiFile[] contextFiles = FilenameIndex.getFilesByName(psiMethod.getProject(), "application.yml", GlobalSearchScope.moduleScope(module));
-        if (contextFiles == null || contextFiles.length == 0) {
+        if (contextFiles.length == 0) {
             contextFiles = FilenameIndex.getFilesByName(psiMethod.getProject(), "application.properties", GlobalSearchScope.moduleScope(module));
         }
-        if (contextFiles != null && contextFiles.length > 0) {
+        if (contextFiles.length > 0) {
             for (PsiFile psiFile : contextFiles) {
                 if (psiFile.getName().contains(".yml") || psiFile.getName().contains(".yaml")) {
                     YamlParser yamlParser = new YamlParser(psiFile);
@@ -305,7 +306,8 @@ public class RestParser extends Parser {
         if (putMapAn != null) {
             methodUriPart = getPartOfUri(putMapAn);
 
-        }PsiAnnotation deleteMapAn = MyPsiSupport.getPsiAnnotation(psiMethod, SpringContact.ANNOTATION_DELETEMAPPING);
+        }
+        PsiAnnotation deleteMapAn = MyPsiSupport.getPsiAnnotation(psiMethod, SpringContact.ANNOTATION_DELETEMAPPING);
         if (deleteMapAn != null) {
             methodUriPart = getPartOfUri(deleteMapAn);
         }
