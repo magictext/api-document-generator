@@ -264,6 +264,9 @@ public class RestParser extends Parser {
         if (contextFiles.length == 0) {
             contextFiles = FilenameIndex.getFilesByName(psiMethod.getProject(), "application.properties", GlobalSearchScope.moduleScope(module));
         }
+        if (contextFiles.length == 0) {
+            contextFiles = FilenameIndex.getFilesByName(psiMethod.getProject(), "bootstrap.yml", GlobalSearchScope.moduleScope(module));
+        }
         if (contextFiles.length > 0) {
             for (PsiFile psiFile : contextFiles) {
                 if (psiFile.getName().contains(".yml") || psiFile.getName().contains(".yaml")) {
