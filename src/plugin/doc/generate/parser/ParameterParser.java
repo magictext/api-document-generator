@@ -32,14 +32,14 @@ public class ParameterParser extends Parser {
         if (psiParameters == null || psiParameters.length == 0) {
             return null;
         }
-        PsiParameter firstParamter = this.psiParameters[0];
+        /*PsiParameter firstParamter = this.psiParameters[0];
         PsiClass psiClass = MyPsiSupport.getPsiClass(firstParamter.getType());
         if (psiClass != null && TypeTranslator.docTypeTranslate(psiClass.getQualifiedName()).equals(TypeTranslator.TYPE_OBJ)) {
             ObjectParser objectParser = new ObjectParser(firstParamter.getType(), firstParamter.getProject(), 0);
             objectParser.parseDefinition();
             this.fieldDefinitions = objectParser.getFieldDefinitions();
             return null;
-        }
+        }*/
         doParse();
         return null;
     }
