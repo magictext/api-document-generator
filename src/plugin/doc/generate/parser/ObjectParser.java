@@ -3,8 +3,7 @@ package plugin.doc.generate.parser;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiUtil;
-import plugin.doc.generate.contact.CommonContact;
-import plugin.doc.generate.contact.MyContact;
+import plugin.doc.generate.contact.ParamRequiredAnnotationQualifiedNames;
 import plugin.doc.generate.definition.FieldDefinition;
 import plugin.doc.generate.parser.translator.TypeTranslator;
 import plugin.doc.generate.utils.Convertor;
@@ -110,9 +109,7 @@ public class ObjectParser extends Parser {
         if (!require) {
             require = MyPsiSupport.getPsiAnnotation(psiField, CommonContact.CONSTRAINTS_NOTNULL) != null;
         }*/
-        definition.setRequire(MyPsiSupport.getPsiAnnotation(psiField, CommonContact.CONSTRAINTS_NOTNULL) != null
-                || MyPsiSupport.getPsiAnnotation(psiField, CommonContact.CONSTRAINTS_NOTBLANK) != null
-                || MyPsiSupport.getPsiAnnotation(psiField, CommonContact.CONSTRAINTS_NOTEMPTY) != null);
+        definition.setRequire(ParamRequiredAnnotationQualifiedNames.required(MyPsiSupport.getPsiAnnotations(psiField)));
         definition.setLayer(layer);
         definition.setName(name);
         definition.setDesc(dec);

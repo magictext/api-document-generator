@@ -1,8 +1,7 @@
 package plugin.doc.generate.parser;
 
 import com.intellij.psi.*;
-import plugin.doc.generate.contact.CommonContact;
-import plugin.doc.generate.contact.MyContact;
+import plugin.doc.generate.contact.ParamRequiredAnnotationQualifiedNames;
 import plugin.doc.generate.definition.FieldDefinition;
 import plugin.doc.generate.parser.translator.TypeTranslator;
 import plugin.doc.generate.utils.JavaDocUtils;
@@ -74,11 +73,10 @@ public class ParameterParser extends Parser {
         } else {
             definition.setType(TypeTranslator.docTypeTranslate(fieldClass.getQualifiedName()));
         }
-        boolean require = MyPsiSupport.getPsiAnnotation(psiParameter, MyContact.VALIDATOR_NOTEMPTYCHECK) != null;
-        if (!require) {
-            require = MyPsiSupport.getPsiAnnotation(psiParameter, CommonContact.CONSTRAINTS_NOTNULL) != null;
-        }
-        definition.setRequire(require);
+
+        boolean required = ParamRequiredAnnotationQualifiedNames.required(MyPsiSupport.getPsiAnnotations(psiParameter));
+
+        definition.setRequire(required);
         return definition;
     }
 }

@@ -10,9 +10,9 @@ import com.intellij.psi.*;
 import com.intellij.psi.impl.source.tree.java.PsiNameValuePairImpl;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiUtil;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -209,6 +209,14 @@ public abstract class MyPsiSupport {
             }
         }
         return null;
+    }
+
+    public static PsiAnnotation[] getPsiAnnotations(PsiParameter psiParameter){
+        return psiParameter.getAnnotations();
+    }
+
+    public static PsiAnnotation[] getPsiAnnotations(PsiField psiField){
+        return psiField.getAnnotations();
     }
 
     /**
