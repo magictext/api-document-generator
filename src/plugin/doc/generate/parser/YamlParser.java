@@ -25,7 +25,7 @@ public class YamlParser extends Parser {
         try {
             inputStream = psiFile.getVirtualFile().getInputStream();
             this.data = new ArrayList<>();
-            yaml.loadAll(inputStream).forEach(item->{
+            yaml.loadAll(inputStream).forEach(item -> {
                 data.add(item);
             });
 
@@ -49,7 +49,7 @@ public class YamlParser extends Parser {
         return null;
     }
 
-    public String findProperty(String ... keys) {
+    public String findProperty(String... keys) {
         List<String> keyPathList = Arrays.asList(keys);
         for (Object target : this.data) {
             Map<String, Object> properties = (Map<String, Object>) target;

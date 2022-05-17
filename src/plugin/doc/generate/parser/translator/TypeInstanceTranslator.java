@@ -1,8 +1,8 @@
 package plugin.doc.generate.parser.translator;
 
 public class TypeInstanceTranslator {
-    public static Object translate(String canonicalText){
-        switch (canonicalText){
+    public static Object translate(String canonicalText) {
+        switch (canonicalText) {
             case "java.lang.Long":
                 return 123456;
             case "java.lang.Integer":

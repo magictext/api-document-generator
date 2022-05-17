@@ -41,7 +41,7 @@ public class TypeTranslator {
         intTypeList.add("java.lang.Short");
     }
 
-    public static void initBoolTypeList(){
+    public static void initBoolTypeList() {
         boolTypeList = new HashSet<>();
         boolTypeList.add("java.lang.Boolean");
         boolTypeList.add("boolean");
@@ -89,10 +89,10 @@ public class TypeTranslator {
         if (charTypeList == null) {
             initCharTypeList();
         }
-        if(boolTypeList == null){
+        if (boolTypeList == null) {
             initBoolTypeList();
         }
-        if(boolTypeList.contains(javaType)){
+        if (boolTypeList.contains(javaType)) {
             return "Boolean";
         }
         if (charTypeList.contains(javaType)) {
