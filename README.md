@@ -1,3 +1,4 @@
-# Document generator
+# idea自动生成接口markdown文件插件
 
-根据SpringMVC 代码自动生成 API markdown文档
+根据Springboot 代码自动生成 API markdown文档
+下载zip包安装后在controller方法名上右键选中生成文档
