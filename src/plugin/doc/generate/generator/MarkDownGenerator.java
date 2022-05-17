@@ -11,29 +11,33 @@ public class MarkDownGenerator {
         this.builder = new StringBuilder();
     }
 
-    public void appendH1(String h1){
-        builder.append(String.format("# %s\n",h1));
-    }
-    public void appendH2(String h2){
-        builder.append(String.format("## %s\n",h2));
-    }
-    public void appendH3(String h3){
-        builder.append(String.format("### %s\n",h3));
-    }
-    public void appendH4(String h4){
-        builder.append(String.format("#### %s\n",h4));
-    }
-    public void appendH5(String h5){
-        builder.append(String.format("##### %s\n",h5));
+    public void appendH1(String h1) {
+        builder.append(String.format("# %s\n", h1));
     }
 
-    public void appendCode(String type ,String code){
-        builder.append(String.format("```%s\n",type));
+    public void appendH2(String h2) {
+        builder.append(String.format("## %s\n", h2));
+    }
+
+    public void appendH3(String h3) {
+        builder.append(String.format("### %s\n", h3));
+    }
+
+    public void appendH4(String h4) {
+        builder.append(String.format("#### %s\n", h4));
+    }
+
+    public void appendH5(String h5) {
+        builder.append(String.format("##### %s\n", h5));
+    }
+
+    public void appendCode(String type, String code) {
+        builder.append(String.format("```%s\n", type));
         builder.append(code);
         builder.append("```\n");
     }
 
-    public void appendTable(List table){
+    public void appendTable(List table) {
         Object o = table.get(0);
         Field[] fields = o.getClass().getFields();
         int length = fields.length;
@@ -53,7 +57,7 @@ public class MarkDownGenerator {
         str.append("\n");
 
 
-        table.forEach( e->{
+        table.forEach(e -> {
             str.append("| ");
             for (Field field : fields) {
                 try {
@@ -70,14 +74,14 @@ public class MarkDownGenerator {
         builder.append(str);
     }
 
-    public void appendBlock(String str){
+    public void appendBlock(String str) {
         builder.append("> ");
         builder.append(str);
         builder.append("\n");
     }
 
 
-    public String getText(){
+    public String getText() {
         return builder.toString();
     }
 }

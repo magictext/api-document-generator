@@ -11,7 +11,7 @@ public class SpringControllerChecker implements EventChecker {
     @Override
     public boolean check(AnActionEvent event) {
         PsiClass[] psiClasses = MyPsiSupport.getPsiClass(event);
-        if(psiClasses == null){
+        if (psiClasses == null) {
             return false;
         }
         boolean hasEntityAnnotation = false;

@@ -6,9 +6,10 @@ import com.intellij.psi.PsiParameter;
 import com.intellij.psi.PsiType;
 import plugin.doc.generate.parser.translator.TypeInstanceTranslator;
 
-public class ParamsJsonParser extends Parser{
+public class ParamsJsonParser extends Parser {
     private PsiParameter[] psiParameter;
     private String example;
+
     public ParamsJsonParser(PsiParameter[] psiParameter) {
         this.psiParameter = psiParameter;
     }

@@ -10,9 +10,9 @@ import com.intellij.psi.*;
 import com.intellij.psi.impl.source.tree.java.PsiNameValuePairImpl;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiUtil;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -159,7 +159,6 @@ public abstract class MyPsiSupport {
     }
 
 
-
     /**
      * 通过annotation 的全限定名称 获得psiField 的某个PsiAnnotation 对象
      *
@@ -209,6 +208,14 @@ public abstract class MyPsiSupport {
             }
         }
         return null;
+    }
+
+    public static PsiAnnotation[] getPsiAnnotations(PsiParameter psiParameter) {
+        return psiParameter.getAnnotations();
+    }
+
+    public static PsiAnnotation[] getPsiAnnotations(PsiField psiField) {
+        return psiField.getAnnotations();
     }
 
     /**
@@ -311,7 +318,7 @@ public abstract class MyPsiSupport {
     public static PsiType getGenericsType(PsiType psiType, Integer index) {
         Map<PsiTypeParameter, PsiType> map = resolveGenericsMap(psiType);
         PsiClassType psiClassType = (PsiClassType) psiType;
-        if(psiClassType.resolve().getTypeParameters() == null || psiClassType.resolve().getTypeParameters().length - 1 < index){
+        if (psiClassType.resolve().getTypeParameters() == null || psiClassType.resolve().getTypeParameters().length - 1 < index) {
             return null;
         }
         PsiType paramType = map.get(psiClassType.resolve().getTypeParameters()[index]);
@@ -356,6 +363,7 @@ public abstract class MyPsiSupport {
 
     /**
      * 通过泛型名称获得泛型PsiType
+     *
      * @param psiType
      * @param genericsName
      * @return

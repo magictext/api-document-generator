@@ -68,10 +68,10 @@ public class JsonParser extends Parser {
                 MapParser mapParser = new MapParser(fieldType, 1);
                 Map map = mapParser.generateMap();
 //                Map map = generateMap(fieldType, 1);
-                obj.put(psiField.getName(),map);
+                obj.put(psiField.getName(), map);
 
             } else if ("List".equals(flag)) {
-                obj.put(psiField.getName(),new ArrayList<>());
+                obj.put(psiField.getName(), new ArrayList<>());
             } else {
                 Object translate = TypeInstanceTranslator.translate(psiField.getType().getCanonicalText());
                 obj.put(psiField.getName(), translate);
@@ -79,7 +79,6 @@ public class JsonParser extends Parser {
 
         }
         return obj.toStringPretty();
-
 
 
 //            FieldDefinition definition = new FieldDefinition();

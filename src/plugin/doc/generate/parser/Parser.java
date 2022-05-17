@@ -8,7 +8,7 @@ public abstract class Parser {
 
     abstract public String parseDefinition();
 
-    public PsiType getRealType(PsiType psiType, PsiField psiField){
+    public PsiType getRealType(PsiType psiType, PsiField psiField) {
         PsiType fieldType = MyPsiSupport.getGenericsType(psiType, psiField);
         if (fieldType == null) {
             fieldType = psiField.getType();

@@ -17,5 +17,4 @@ public class SpringContact {
     public static final String ANNOTATION_REQUESTBODY = "org.springframework.web.bind.annotation.RequestBody";
 
 
-
 }

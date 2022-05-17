@@ -37,9 +37,9 @@ public class ControllerDocumentGenerator extends AnAction {
     @Override
     public void actionPerformed(AnActionEvent anActionEvent) {
         List<RestFulDefinition> definitions = parseSelectedMethod(anActionEvent);
-        if(definitions != null && definitions.size() != 0){
+        if (definitions != null && definitions.size() != 0) {
             StringBuffer builder = new StringBuffer();
-            definitions.forEach(e->{
+            definitions.forEach(e -> {
                 RestDocumentGenerator generator = new RestDocumentGenerator(e);
                 String content = generator.generate();
                 builder.append(content);
@@ -61,24 +61,24 @@ public class ControllerDocumentGenerator extends AnAction {
 
         DocumentExportDialog dialog = new DocumentExportDialog(result);
         dialog.pack();
-        dialog.setSize((int)(width*0.25),(int)(height*0.5));
-        dialog.setLocation((int)(width*0.33),(int)(height*0.2));
+        dialog.setSize((int) (width * 0.25), (int) (height * 0.5));
+        dialog.setLocation((int) (width * 0.33), (int) (height * 0.2));
         dialog.setVisible(true);
 
     }
 
 
-    private List<RestFulDefinition> parseSelectedMethod(AnActionEvent anActionEvent){
+    private List<RestFulDefinition> parseSelectedMethod(AnActionEvent anActionEvent) {
         PsiJavaFile javaFile = MyPsiSupport.getPsiJavaFile(anActionEvent);
         //获得相应带有@RestController 的类
         List<PsiClass> targetClassList = MyPsiSupport.getPsiClasses(javaFile, SpringContact.ANNOTATION_RESCONTROLLER);
         this.psiMethods = this.getMethod(targetClassList);
         PsiMethod psiMethod = this.getPsiMethodSelecting(anActionEvent);
-        if(psiMethod != null){
+        if (psiMethod != null) {
             RestParser parser = new RestParser(psiMethod);
             parser.parseDefinition();
             return Collections.singletonList(parser.getDefinition());
-        }else {
+        } else {
             ArrayList<RestFulDefinition> list = new ArrayList<>();
             // 生成类文档
             return this.psiMethods.stream().map(e -> {

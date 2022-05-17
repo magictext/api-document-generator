@@ -33,12 +33,15 @@ public class RestDocumentGenerator {
     }
 
     private String responseExample() {
-        return "```json \n"+definition.getResponseExample()+"\n ```\n";
+        return "```json \n" + definition.getResponseExample() + "\n ```\n";
     }
 
     private String requestExample() {
-        return "```json \n"+definition.getRequestExample()+"\n ```\n";
-
+        String requestExample = definition.getRequestExample();
+        if (requestExample == null) {
+            return "";
+        }
+        return "```json \n" + requestExample + "\n ```\n";
     }
 
     public String interfaceNamePart() {
@@ -50,7 +53,7 @@ public class RestDocumentGenerator {
     }
 
     public String methodPart() {
-        return "> 请求方式：`" + this.definition.getHttpMethod().toUpperCase() + "`,`" + this.definition.getRequestBodyType().toString() +"`\n";
+        return "> 请求方式：`" + this.definition.getHttpMethod().toUpperCase() + "`,`" + this.definition.getRequestBodyType().toString() + "`\n";
     }
 
     public String requestPart() {
