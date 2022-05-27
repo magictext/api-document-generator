@@ -1,1 +1,1 @@
-rootProject.name = "mdDocGenerator"
+rootProject.name = "api-document-generator"
